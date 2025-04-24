@@ -1,9 +1,26 @@
 ---
-
 - name: Apply Amazon Linux 2023 CIS hardening
   hosts: all
   become: true
 
-  roles:
+  pre_tasks:
+    - name: Disable metadata GPG-check for amazonlinux repo
+      ini_file:
+        dest: /etc/yum.repos.d/amazonlinux.repo
+        section: amazonlinux
+        option: repo_gpgcheck
+        value: '0'
 
-      - role: "{{ playbook_dir }}"
+    - name: Disable metadata GPG-check for kernel-livepatch repo
+      ini_file:
+        dest: /etc/yum.repos.d/kernel-livepatch.repo
+        section: kernel-livepatch
+        option: repo_gpgcheck
+        value: '0'
+
+    - name: Refresh all dnf metadata caches
+      dnf:
+        update_cache: yes
+
+  roles:
+    - role: "{{ playbook_dir }}"
