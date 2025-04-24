@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ansible-playbook -i hosts site.yml \
+  --skip-tags rule_4.6.6,rule_1.2.4 \
+  -vv
