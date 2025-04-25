@@ -30,6 +30,7 @@
       enabled: true
       masked: false
       state: reloaded
+  when: ansible_mounts | selectattr('mount', 'equalto', '/tmp') | list | length == 0
 
 - name: Remount tmp
   ansible.posix.mount:
