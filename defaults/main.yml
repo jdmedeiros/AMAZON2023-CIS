@@ -61,7 +61,7 @@ amzn2023cis_selinux_disable: false
 # Boot (BIOS boot) is not in use, which means that the
 # permissions will have to be set for the configuration of
 # efi boot.
-amzn2023cis_legacy_boot: true
+amzn2023cis_legacy_boot: false
 
 ## Python Binary
 ## This is used for python3 Installations where python2 OS modules
