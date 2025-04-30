@@ -1,10 +1,7 @@
-[appservers]
+[hosts]
 10.0.1.238
 10.0.1.240
 
-[appservers:vars]
+[hosts:vars]
 ansible_user=ec2-user
-# key for the *app* servers:
 ansible_ssh_private_key_file=/home/ec2-user/.ssh/app-server-key.pem
-# tunnel every SSH through the bastion using the bastion key:
-ansible_ssh_common_args='-o ProxyCommand="ssh -i /home/ec2-user/.ssh/bastion-key -W %h:%p ec2-user@10.0.1.11"'
