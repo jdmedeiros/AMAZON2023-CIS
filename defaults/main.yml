@@ -81,7 +81,7 @@ benchmark_version: 'v1.0.0'
 # the reboot or not. If it is set to 'false', the role
 # would reboot the system before audit, which could
 # give better audit results.
-skip_reboot: true
+skip_reboot: false
 
 # This variable is used in a handler task, that is notified
 # if a certain task's changes are considered to be in need
@@ -98,10 +98,10 @@ change_requires_reboot: false
 ### vars/audit.yml for other settings  ###
 
 # Allow audit to setup the requirements including installing git (if option chosen and downloading and adding goss binary to system)
-setup_audit: false
+setup_audit: true
 
 # enable audits to run - this runs the audit and get the latest content
-run_audit: false
+run_audit: true
 # Run heavy tests - some tests can have more impact on a system enabling these can have greater impact on a system
 audit_run_heavy_tests: true
 
@@ -122,7 +122,7 @@ get_audit_binary_method: download
 ## if get_audit_binary_method - copy the following needs to be updated for your environment
 ## it is expected that it will be copied from somewhere accessible to the control node
 ## e.g copy from ansible control node to remote host
-audit_bin_copy_location: /some/accessible/path
+audit_bin_copy_location: /usr/local/bin
 
 # how to get audit files onto host options
 # options are git/copy/archive/get_url other e.g. if you wish to run from already downloaded conf
@@ -135,11 +135,11 @@ audit_content: git
 audit_conf_source: "some path or url to copy from"
 
 # Destination for the audit content to be placed on managed node
-# note may not need full path e.g. /opt with the directory being the {{ benchmark }}-Audit directory
+# note may not need full path e.g. /var/opt with the directory being the {{ benchmark }}-Audit directory
 audit_conf_dest: "/opt"
 
 # Where the audit logs are stored
-audit_log_dir: '/opt'
+audit_log_dir: '/var/opt'
 
 ## Ability to collect and take audit files moving to a centralised location
 # This enables the collection of the files from the host
@@ -153,7 +153,7 @@ fetch_audit_output: false
 audit_output_collection_method: fetch
 
 # Location to put the audit files
-audit_output_destination: /opt/audit_summaries/
+audit_output_destination: /var/opt/audit_summaries/
 
 ### Goss Settings ##
 ####### END ########
@@ -474,7 +474,7 @@ amzn2023cis_rule_6_2_11: true
 # "nodev,noexec,nosuid" options are set for "/tmp".
 # If it is set to 'true', the role will use the tmp.mount
 # service otherwise, the role will use the fstab configuration.
-amzn2023cis_tmp_svc: true
+amzn2023cis_tmp_svc: false
 
 ## Control 1.9 - Ensure system-wide crypto policy is not legacy
 # This variable helps in determining which type of crypto policy

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# set this to:
+#   "-e amzn2023cis_legacy_boot=true" to force legacy;
+#   "-e amzn2023cis_legacy_boot=false" to force UEFI;
+# or leave empty to auto-detect:
+EXTRA="${1:-}"
+
+ansible-playbook -i hosts site.yml \
+  --skip-tags rule_1.2.4 \
+  $EXTRA \
+  -vv

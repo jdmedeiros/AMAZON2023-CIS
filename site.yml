@@ -1,9 +1,27 @@
 ---
-
 - name: Apply Amazon Linux 2023 CIS hardening
   hosts: all
   become: true
+  gather_facts: true
+
+  pre_tasks:
+    - name: Detect UEFI boot on Linux (only if not overridden)
+      ansible.builtin.stat:
+        path: /sys/firmware/efi
+      register: efi
+      when: amzn2023cis_legacy_boot is not defined
+
+    - name: Set CIS legacy-boot flag (only if not overridden)
+      ansible.builtin.set_fact:
+        amzn2023cis_legacy_boot: "{{ not efi.stat.exists }}"
+      when: amzn2023cis_legacy_boot is not defined
+
+    - name: Debug detected or overridden value
+      ansible.builtin.debug:
+        msg: >-
+          amzn2023cis_legacy_boot is
+          {{ amzn2023cis_legacy_boot }} 
+          ({{ 'UEFI' if efi is defined and efi.stat.exists else 'BIOS or user-forced' }})
 
   roles:
-
-      - role: "{{ playbook_dir }}"
+    - role: "{{ playbook_dir }}"
