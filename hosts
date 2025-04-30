@@ -1,15 +1,10 @@
 [bastion]
-# replace BASTION_IP with your actual jump‐host IP
-bastion ansible_host=10.0.1.11
-        ansible_user=ec2-user
-        ansible_ssh_private_key_file=/home/ec2-user/.ssh/bastion-key
+10.0.1.11 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/bastion-key
 
 [appservers]
-10.0.1.238
-10.0.1.240
+10.0.1.238 ansible_user=ec2-user
+10.0.1.240 ansible_user=ec2-user
 
 [appservers:vars]
-# these vars apply to both appservers
-ansible_user=ec2-user
-# proxy all SSH through the bastion host defined above
-ansible_ssh_common_args='-o ProxyJump=ec2-user@bastion'
+# Tunnel all SSH through the bastion using the bastion-key:
+ansible_ssh_common_args='-o ProxyCommand="ssh -i /home/ec2-user/.ssh/bastion-key -W %h:%p ec2-user@10.0.1.11"'
