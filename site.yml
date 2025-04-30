@@ -19,9 +19,8 @@
     - name: Debug detected or overridden value
       ansible.builtin.debug:
         msg: >-
-          amzn2023cis_legacy_boot is
-          {{ amzn2023cis_legacy_boot }} 
-          ({{ 'UEFI' if efi is defined and efi.stat.exists else 'BIOS or user-forced' }})
+          amzn2023cis_legacy_boot is {{ amzn2023cis_legacy_boot }}
+          ({{ 'UEFI' if (efi.stat.exists | default(false)) else 'BIOS or user-forced' }})
 
   roles:
     - role: "{{ playbook_dir }}"
