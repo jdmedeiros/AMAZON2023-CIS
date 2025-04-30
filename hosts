@@ -1,6 +1,3 @@
-[bastion]
-10.0.1.11 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/.ssh/bastion-key
-
 [appservers]
 10.0.1.238 ansible_user=ec2-user
 10.0.1.240 ansible_user=ec2-user
