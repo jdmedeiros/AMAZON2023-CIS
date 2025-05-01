@@ -1,5 +1,5 @@
 [appservers]
-10.0.1.219
+10.0.1.127
 
 [appservers:vars]
 ansible_user=ec2-user
