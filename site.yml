@@ -66,4 +66,4 @@
 
   handlers:
     - name: Restart auditd
-      ansible.builtin.shell: service auditd reload
+      ansible.builtin.shell: augenrules --load
