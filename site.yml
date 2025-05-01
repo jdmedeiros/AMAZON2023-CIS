@@ -24,3 +24,15 @@
 
   roles:
     - role: "{{ playbook_dir }}"
+
+  post_tasks:
+    - name: Override squashfs disable to use /bin/false
+      ansible.builtin.replace:
+        path: /etc/modprobe.d/CIS.conf
+        regexp: '^(#\s*)?install\s+squashfs\s+/bin/true'
+        replace: 'install squashfs /bin/false'
+        backup: yes
+
+  handlers:
+    - name: Restart auditd
+      ansible.builtin.shell: service auditd reload

@@ -91,7 +91,7 @@
       - auditd_immutable_check.stdout == '1'
 
 - name: Restart auditd
-  ansible.builtin.shell: service auditd reload
+  ansible.builtin.shell: service auditd restart
 
 - name: Change_requires_reboot
   ansible.builtin.set_fact:
