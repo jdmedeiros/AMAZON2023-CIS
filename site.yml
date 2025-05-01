@@ -42,7 +42,7 @@
 
     - name: Copy managed chrony.conf into /etc
       ansible.builtin.copy:
-        src: /etc/chrony.d/chronyd.conf
+        src: /etc/chrony.d/chrony.conf
         dest: /etc/chrony.conf
         remote_src: yes
         owner: root
