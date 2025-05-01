@@ -62,8 +62,40 @@
         - amzn2023cis_rule_1_5_3
         - systemd_coredump.stat.exists
 
+    - name: Check for legacy 99_auditd.rules file
+      ansible.builtin.stat:
+        path: /etc/audit/rules.d/99_auditd.rules
+      register: old_auditd_rules
 
+    - name: Rename 99_auditd.rules → auditd.rules so watches load after -D
+      ansible.builtin.command: >
+        mv /etc/audit/rules.d/99_auditd.rules
+           /etc/audit/rules.d/auditd.rules
+      when: old_auditd_rules.stat.exists
+
+    - name: Compile audit rule snippets into /etc/audit/audit.rules
+      ansible.builtin.command: augenrules --load
+
+    - name: Load compiled rules into kernel (if auditd not running)
+      ansible.builtin.command: auditctl -R /etc/audit/audit.rules
+      ignore_errors: yes
+
+    - name: Find all rsyslog.d .conf files
+      ansible.builtin.find:
+        paths: /etc/rsyslog.d
+        patterns: '*.conf'
+        file_type: file
+      register: rsyslog_d_confs
+
+    - name: Ensure each rsyslog.d config has FileCreateMode 0640
+      ansible.builtin.lineinfile:
+        path: "{{ item.path }}"
+        regexp: '^\$FileCreateMode'
+        line:   '$FileCreateMode 0640'
+        backup: yes
+        create: yes
+      loop: "{{ rsyslog_d_confs.files }}"
 
   handlers:
-    - name: Restart auditd
-      ansible.builtin.shell: augenrules --load
+    - name: Reload auditd rules
+      ansible.builtin.shell: auditctl -R /etc/audit/audit.rules
