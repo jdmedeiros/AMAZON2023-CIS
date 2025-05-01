@@ -33,6 +33,36 @@
         replace: 'install squashfs /bin/false'
         backup: yes
 
+    - name: Override udf disable to use /bin/false
+      ansible.builtin.replace:
+        path: /etc/modprobe.d/CIS.conf
+        regexp: '^(#\s*)?install\s+udf\s+/bin/true'
+        replace: 'install udf /bin/false'
+        backup: yes
+
+    - name: Copy managed chrony.conf into /etc
+      ansible.builtin.copy:
+        src: /etc/chrony.d/chrony.conf
+        dest: /etc/chrony.conf
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+
+    - name: Override coredump storage to use “0” instead of “none”
+      ansible.builtin.lineinfile:
+        path: /etc/systemd/coredump.conf
+        regexp: '^Storage\s*='
+        line: 'Storage=0'
+        backup: yes
+        create: yes
+      notify: Systemd daemon reload
+      when:
+        - amzn2023cis_rule_1_5_3
+        - systemd_coredump.stat.exists
+
+
+
   handlers:
     - name: Restart auditd
       ansible.builtin.shell: service auditd reload
