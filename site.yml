@@ -97,5 +97,5 @@
       loop: "{{ rsyslog_d_confs.files }}"
 
   handlers:
-    - name: Reload auditd rules
+    - name: Restart auditd
       ansible.builtin.shell: auditctl -R /etc/audit/audit.rules
