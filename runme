@@ -7,6 +7,6 @@
 EXTRA="${1:-}"
 
 ansible-playbook -i hosts site.yml \
-  --skip-tags rule_1.2.4 \
+  --skip-tags rule_1.2.4,rule_5.2.1.4 \
   $EXTRA \
   -vvv
