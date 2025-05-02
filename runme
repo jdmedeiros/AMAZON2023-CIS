@@ -6,6 +6,10 @@
 # or leave empty to auto-detect:
 EXTRA="${1:-}"
 
+# Skipping:
+#   rule_1.2.4: "Ensure repo_gpgcheck is globally activated" - Not possible; AWS Linux 2023 repo does not support this.
+#   rule_5.2.1.4: "Ensure auditd service is enabled" - Not possible; AWS Linux 2023 does not support auditd this way
+
 ansible-playbook -i hosts site.yml \
   --skip-tags rule_1.2.4,rule_5.2.1.4 \
   $EXTRA \
