@@ -926,7 +926,7 @@ amzn2023cis_4_4_2_risks: NEVER
 amzn2023cis_pam_faillock:
     # This variable holds the time in seconds before the account is unlocked.
     # CIS states that this value should be at least 900 and should never be 0.
-    unlock_time: 900
+    unlock_time: 800
     # This variable holds the number of attempts before the account is locked.
     # CIS states that this value should be greater than 0 and no greater than 5.
     deny: 5
