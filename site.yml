@@ -118,31 +118,31 @@
         - rule_1.3.3
         - NIST800-53R5_AU-2
 
-- name: "5.1.2.3 | PATCH | Ensure journald compresses large log files"
-  ansible.builtin.ini_file:
-    path: /etc/systemd/journald.conf
-    section: Journal
-    option: Compress
-    value: yes
-    no_extra_spaces: yes
-    backup: yes
-  notify: Restart journald
-  when: amzn2023cis_rule_5_1_2_3
-  tags:
-    - rule_5.1.2.3
+    - name: "5.1.2.3 | PATCH | Ensure journald compresses large log files"
+      ansible.builtin.ini_file:
+        path: /etc/systemd/journald.conf
+        section: Journal
+        option: Compress
+        value: yes
+        no_extra_spaces: yes
+        backup: yes
+      notify: Restart journald
+      when: amzn2023cis_rule_5_1_2_3
+      tags:
+        - rule_5.1.2.3
 
-- name: "5.1.2.4 | PATCH | Ensure journald writes to persistent disk"
-  ansible.builtin.ini_file:
-    path: /etc/systemd/journald.conf
-    section: Journal
-    option: Storage
-    value: persistent
-    no_extra_spaces: yes
-    backup: yes
-  notify: Restart journald
-  when: amzn2023cis_rule_5_1_2_4
-  tags:
-    - rule_5.1.2.4
+    - name: "5.1.2.4 | PATCH | Ensure journald writes to persistent disk"
+      ansible.builtin.ini_file:
+        path: /etc/systemd/journald.conf
+        section: Journal
+        option: Storage
+        value: persistent
+        no_extra_spaces: yes
+        backup: yes
+      notify: Restart journald
+      when: amzn2023cis_rule_5_1_2_4
+      tags:
+        - rule_5.1.2.4
 
   handlers:
     - name: Restart auditd
