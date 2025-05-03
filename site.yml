@@ -123,7 +123,7 @@
         path: /etc/systemd/journald.conf
         section: Journal
         option: Compress
-        value: yes
+        value: 'yes'
         no_extra_spaces: yes
         backup: yes
       notify: Restart journald
