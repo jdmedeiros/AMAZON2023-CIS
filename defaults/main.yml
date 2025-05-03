@@ -525,7 +525,7 @@ amzn2023cis_aide_cron:
     # This variable represents the user account under which the cron job for AIDE will run.
     cron_user: root
     # This variable represents the path to the AIDE crontab file.
-    cron_file: /etc/cron.hourly/
+    cron_file: /etc/cron.d/aide_cron
     # This variable represents the actual command or script that the cron job
     # will execute for running AIDE.
     aide_job: '/usr/sbin/aide --check'
