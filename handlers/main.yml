@@ -95,4 +95,4 @@
 
 - name: Change_requires_reboot
   ansible.builtin.set_fact:
-      change_requires_reboot: false
+      change_requires_reboot: true

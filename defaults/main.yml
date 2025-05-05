@@ -81,7 +81,7 @@ benchmark_version: 'v1.0.0'
 # the reboot or not. If it is set to 'false', the role
 # would reboot the system before audit, which could
 # give better audit results.
-skip_reboot: false
+skip_reboot: true
 
 # This variable is used in a handler task, that is notified
 # if a certain task's changes are considered to be in need
