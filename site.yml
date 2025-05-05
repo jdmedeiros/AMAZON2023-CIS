@@ -22,10 +22,6 @@
           amzn2023cis_legacy_boot is {{ amzn2023cis_legacy_boot }}
           ({{ 'UEFI' if (efi.stat.exists | default(false)) else 'BIOS or user-forced' }})
 
-    - name: Change_requires_reboot
-      ansible.builtin.set_fact:
-          change_requires_reboot: false
-
   roles:
     - role: "{{ playbook_dir }}"
 
@@ -151,3 +147,7 @@
   handlers:
     - name: Restart auditd
       ansible.builtin.shell: auditctl -R /etc/audit/audit.rules
+
+    - name: Change_requires_reboot
+      ansible.builtin.set_fact:
+        change_requires_reboot: false
