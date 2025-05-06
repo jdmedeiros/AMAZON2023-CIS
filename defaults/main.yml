@@ -81,7 +81,7 @@ benchmark_version: 'v1.0.0'
 # the reboot or not. If it is set to 'false', the role
 # would reboot the system before audit, which could
 # give better audit results.
-skip_reboot: true
+skip_reboot: false
 
 # This variable is used in a handler task, that is notified
 # if a certain task's changes are considered to be in need
@@ -91,7 +91,7 @@ skip_reboot: true
 # Otherwise, a warning message will get displayed, which will
 # alert the user that a reboot is needed based on the latest
 # changes!
-change_requires_reboot: false
+change_requires_reboot: true
 
 ###########################################
 ### Goss is required on the remote host ###
