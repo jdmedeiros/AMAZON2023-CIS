@@ -1014,7 +1014,7 @@ amzn2023cis_umask: '027'
 # certain tasks from section 5.1. If the chosen option
 # is "rsyslog" then only tasks from 5.1.1.x will be executed.
 # Otherwise, only tasks from 5.1.2.x will be executed.
-amzn2023cis_syslog_service: rsyslog
+amzn2023cis_syslog_service: journald
 ## Control 5.1.1.5 - Ensure logging is configured
 # This variable determines if rsyslog configuration
 # shall be ansible managed or not. If you set it to
