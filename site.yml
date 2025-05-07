@@ -148,7 +148,7 @@
     - name: Restart auditd
       become: yes
       ansible.builtin.shell: |
-        systemctl try-reload-or-restart auditd
+        systemctl status auditd
         auditctl -R /etc/audit/audit.rules
 
     - name: Change_requires_reboot
