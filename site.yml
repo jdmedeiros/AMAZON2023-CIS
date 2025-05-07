@@ -149,6 +149,25 @@
       args:
         warn: false
 
+    - name: Find all files under /var/log
+      ansible.builtin.find:
+        paths: /var/log
+        recurse: yes
+        file_type: file
+      register: log_files
+
+    - name: Truncate each log file to zero length
+      ansible.builtin.command:
+        cmd: "truncate -s 0 {{ item.path }}"
+      loop: "{{ log_files.files }}"
+      args:
+        warn: false
+
+    - name: Restart auditd immediately
+      ansible.builtin.systemd:
+        name: auditd
+        state: restarted
+
     - name: Reload audit rules
       ansible.builtin.command: auditctl -R /etc/audit/audit.rules
       args:
