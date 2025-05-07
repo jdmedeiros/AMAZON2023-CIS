@@ -145,12 +145,30 @@
         - rule_5.1.2.4
 
   handlers:
+    - name: Restore SELinux context on audit log dir
+      ansible.builtin.command:
+        cmd: restorecon -Rv /var/log/audit
+      args:
+        warn: false
+
     - name: Restart auditd
-      become: yes
-      ansible.builtin.shell: |
-        restorecon -Rv /var/log/audit
-        systemctl start auditd
-        auditctl -R /etc/audit/audit.rules
+      ansible.builtin.systemd:
+        name: auditd
+        enabled: yes
+        state: started
+
+    - name: Load audit rules
+      ansible.builtin.command:
+        cmd: auditctl -R /etc/audit/audit.rules
+      args:
+        warn: false
+      register: load_rules
+      failed_when: load_rules.rc not in [0, 3]
+
+    - name: Debug auditctl output (if any)
+      ansible.builtin.debug:
+        var: load_rules.stdout_lines
+      when: load_rules.stdout_lines is defined and load_rules.stdout_lines|length > 0
 
     - name: Change_requires_reboot
       ansible.builtin.set_fact:
