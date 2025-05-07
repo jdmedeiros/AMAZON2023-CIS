@@ -149,11 +149,6 @@
       args:
         warn: false
 
-    - name: Restart auditd immediately
-      ansible.builtin.systemd:
-        name: auditd
-        state: restarted
-
     - name: Reload audit rules
       ansible.builtin.command: auditctl -R /etc/audit/audit.rules
       args:
